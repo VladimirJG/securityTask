@@ -24,8 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // Конфигурция SS (какая стр. отв за вход/ошибки и т.д.)
         // + в нем идет конфиг авторизации
-        http.csrf().disable()
-                .authorizeRequests()
+        http.authorizeRequests()
                 .antMatchers("/auth/login", "/auth/registration", "/error").permitAll()
                 .anyRequest().authenticated()
                 .and()
