@@ -3,29 +3,31 @@ package com.example.securityTask.model;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
+@Builder
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @ToString
+@AllArgsConstructor
+@RequiredArgsConstructor
 @Entity
 @Table(name = "Person")
 public class Person {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
-    @NotEmpty(message = "name must not be empty")
-    @Size(min = 2,max = 100,message = "names size min=2, max=100")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
     @Column(name = "username")
     private String username;
-    @Column(name = "year_of_birth")
-    private int yearOfBirth;
-    @Column(name = "password")
-    private String password;
-    @Column(name = "role")
-    private String role;
+
+    @Column(name = "email")
+    private String email;
+
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "person_role", joinColumns = @JoinColumn(name = "person_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles = new HashSet<>();
 }
+
