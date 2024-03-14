@@ -12,11 +12,17 @@ public class HelloController {
     public String hello() {
         return "hello";
     }
+
     @GetMapping("/showInfo")
-    public String showUserInfo(){
+    public String showUserInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PersonDetails principal = (PersonDetails) authentication.getPrincipal();
         System.out.println(principal.getPerson());
         return "hello";
+    }
+
+    @GetMapping("/admin")
+    public String adminPage() {
+        return "admin";
     }
 }
